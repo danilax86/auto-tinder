@@ -123,14 +123,14 @@ class TinderBot:
             like_btn.click()
             counter += 1
             if counter == 1:
-                answer = " girl"
+                answer = " partner"
             else:
-                answer = " girls"
+                answer = " partners"
             print('\rYou have liked ' + str(counter) + answer, end = "")
 
         except ElementClickInterceptedException:
             time.sleep(1)
-            loading("girls")
+            loading("partners")
 
     def dislike(self):
         try:
@@ -139,7 +139,7 @@ class TinderBot:
             dislike_btn.click()
         except ElementClickInterceptedException:
             time.sleep(1)
-            loading("girls")
+            loading("partners")
 
     def auto_swipe(self):
         while True:
