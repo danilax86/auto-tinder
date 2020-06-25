@@ -107,7 +107,7 @@ class TinderBot:
     def allow_notification(self):
         while True:
             try:
-                time.sleep(1.5)
+                time.sleep(3)
                 allow_notification_btn = self.driver.find_element_by_xpath(
                     "/html/body/div[2]/div/div/div/div/div[3]/button[2]")
                 allow_notification_btn.click()
