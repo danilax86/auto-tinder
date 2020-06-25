@@ -1,3 +1,4 @@
+import os
 import time
 
 from web_driver import WebDriver
@@ -9,8 +10,11 @@ webDriverOptions = WebDriver()
 
 class TinderBot:
     def __init__(self):
-        self.driver = webdriver.Firefox(executable_path = webDriverOptions.get_executable_path(),
-                                        options = webDriverOptions.get_options())
+        if os.name == "posix":
+            self.driver = webdriver.Firefox(options = webDriverOptions.get_options())
+        if os.name == "nt":
+            self.driver = webdriver.Firefox(executable_path = r'./geckodriver.exe',
+                                            options = webDriverOptions.get_options())
         self.driver.get("https://tinder.com/")
 
     def login(self, login: str, password: str):

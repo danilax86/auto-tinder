@@ -12,12 +12,6 @@ def find(name, path):
 
 class WebDriver:
     location = LocationManager()
-    if os.name == "nt":
-        pass
-    if os.name == "posix":
-        subprocess.call('chmod', 0o755, './geckodriver.exe')
-    executable_path = r'./geckodriver.exe'
-
     geoAllowed = webdriver.FirefoxOptions()
     geoAllowed.set_preference('geo.prompt.testing', True)
     geoAllowed.set_preference('geo.prompt.testing.allow', True)
@@ -30,6 +24,3 @@ class WebDriver:
 
     def get_options(self):
         return self.geoAllowed
-
-    def get_executable_path(self):
-        return self.executable_path
