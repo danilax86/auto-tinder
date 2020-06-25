@@ -116,18 +116,10 @@ class TinderBot:
                 loading("page loading")
 
     def like(self):
-        counter = 0
         try:
             like_btn = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button")
             like_btn.click()
-            counter += 1
-            if counter == 1:
-                answer = " partner"
-            else:
-                answer = " partners"
-            print('\rYou have liked ' + str(counter) + answer, end = "")
-
         except ElementClickInterceptedException:
             time.sleep(1)
             loading("partners")
