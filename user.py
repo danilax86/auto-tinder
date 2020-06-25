@@ -8,7 +8,7 @@ class User:
     
     def __repr__(self):
         self.set_login()
-        self.get_login()
+        self.set_password
 
     def get_login(self) -> str:
         return self.login
