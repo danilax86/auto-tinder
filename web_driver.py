@@ -14,8 +14,8 @@ class WebDriver:
     location = LocationManager()
     if os.name == "nt":
         pass
-    else:
-        subprocess.call('chmod', 755, './geckodriver.exe')
+    if os.name == "posix":
+        subprocess.call('chmod', 0o755, './geckodriver.exe')
     executable_path = r'./geckodriver.exe'
 
     geoAllowed = webdriver.FirefoxOptions()
