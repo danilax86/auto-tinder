@@ -1,6 +1,6 @@
 import time
 
-from webDriver import WebDriver
+from web_driver import WebDriver
 from selenium import webdriver
 from selenium.common.exceptions import *
 
