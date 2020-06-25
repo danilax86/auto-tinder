@@ -16,9 +16,17 @@ class LocationManager:
         self.query = str(input("Provide your city: ")) + ', ' + str(input("Provide your country: "))
 
     def get_lat(self) -> str:
-        self.latitude = (geocoder.geocode(self.query))[0]['geometry']['lat']
-        return self.latitude
+        try:
+            self.latitude = (geocoder.geocode(self.query))[0]['geometry']['lat']
+            return self.latitude
+        except IndexError:
+            print("Provide correct location\n")
+            self.set_location()
 
     def get_lng(self) -> str:
-        self.longitude = (geocoder.geocode(self.query))[0]['geometry']['lng']
-        return self.longitude
+        try:
+            self.longitude = (geocoder.geocode(self.query))[0]['geometry']['lng']
+            return self.longitude
+        except IndexError:
+            print("Provide correct location\n")
+            self.set_location()
