@@ -7,9 +7,12 @@ Allows you to set your geolocation by input.
 Uses your Google account for the login.
 
 ##### Get all dependencies
-`pip install -r requirements.txt`
+run `pip install -r requirements.txt`
+
+##### For macOS users:
+run `brew install geckodriver`
 
 ##### Run an application
-`python run.py`
+run `python run.py`
 
 **Works only with Firefox!**
