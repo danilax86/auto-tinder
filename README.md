@@ -7,7 +7,7 @@ Allows you to set your geolocation by input.
 Uses your Google account for the login.
 
 ##### Get all dependencies
-`pip install =r requirements.txt`
+`pip install -r requirements.txt`
 
 ##### Run an application
 `python run.py`
