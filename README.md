@@ -15,4 +15,6 @@ run `brew install geckodriver`
 ##### Run an application
 run `python run.py`
 
+or run `python3 run.py` (if `python` stands for 2nd version)
+
 **Works only with Firefox!**
