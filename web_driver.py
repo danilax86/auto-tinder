@@ -1,12 +1,19 @@
 from selenium import webdriver
+import os
 
 from location_manager import LocationManager
+
+
+def find(name, path):
+    for root, dirs, files in os.walk(path):
+        if name in files:
+            return os.path.join(root, name)
 
 
 class WebDriver:
     location = LocationManager()
 
-    executable_path = r'C:\Program Files\Selenium\geckodriver.exe'
+    executable_path = r'./geckodriver.exe'
     geoAllowed = webdriver.FirefoxOptions()
     geoAllowed.set_preference('geo.prompt.testing', True)
     geoAllowed.set_preference('geo.prompt.testing.allow', True)
