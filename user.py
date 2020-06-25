@@ -1,12 +1,8 @@
 class User:
     login: str = ""
     password: str = ""
-
-    def __init__(self, login: str, password: str):
-        self.login = login
-        self.password = password
     
-    def __repr__(self):
+    def __init__(self):
         self.set_login()
         self.set_password()
 
