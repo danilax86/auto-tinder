@@ -121,8 +121,14 @@ class TinderBot:
                 "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button")
             like_btn.click()
         except ElementClickInterceptedException:
-            time.sleep(1)
-            loading("partners")
+            # If match
+            try:
+                back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/main/div["
+                                                                   "2]/div/div/div[1]/div/div[3]/a")
+                back_to_tinder.click()
+            except NoSuchElementException or ElementClickInterceptedException:
+                time.sleep(1)
+                loading("partners")
 
     def dislike(self):
         try:
