@@ -9,8 +9,7 @@ Uses your Google account for the login.
 #### Get all dependencies:
 run `pip install -r requirements.txt`
 
-###### For macOS users:
-run `brew install geckodriver`
+if macOS user also run `brew install geckodriver`
 
 #### Run an application:
 run `python run.py`
