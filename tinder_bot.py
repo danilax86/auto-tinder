@@ -21,6 +21,8 @@ class TinderBot:
         self.google_login(login, password)
 
     def google_login(self, login: str, password: str):
+        self.log()
+        self.push_login_btn()
         self.push_login_btn()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.input_email(login)
@@ -29,6 +31,15 @@ class TinderBot:
         self.driver.switch_to.window(self.driver.window_handles[0])
         self.allow_location()
         self.allow_notification()
+
+    def log(self):
+        while True:
+            try:
+                login_btn = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/header/div[1]/div[2]/div/button")
+                login_btn.click()
+                break
+            except NoSuchElementException:
+                time.sleep(1.5)
 
     def push_login_btn(self):
         while True:
