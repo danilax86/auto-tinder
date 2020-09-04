@@ -11,10 +11,10 @@ webDriverOptions = WebDriver()
 class TinderBot:
     def __init__(self):
         if os.name == "posix":
-            self.driver = webdriver.Firefox(options = webDriverOptions.get_options())
+            self.driver = webdriver.Firefox(options=webDriverOptions.get_options())
         if os.name == "nt":
-            self.driver = webdriver.Firefox(executable_path = r'./geckodriver.exe',
-                                            options = webDriverOptions.get_options())
+            self.driver = webdriver.Firefox(executable_path=r'./geckodriver.exe',
+                                            options=webDriverOptions.get_options())
         self.driver.get("https://tinder.com/")
 
     def login(self, login: str, password: str):
@@ -35,7 +35,8 @@ class TinderBot:
     def log(self):
         while True:
             try:
-                login_btn = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/header/div[1]/div[2]/div/button")
+                login_btn = self.driver.find_element_by_xpath(
+                    "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/header/div[1]/div[2]/div/button")
                 login_btn.click()
                 break
             except NoSuchElementException:
@@ -77,7 +78,7 @@ class TinderBot:
                 break
 
             except NoSuchElementException:
-                print("\r", end = "")
+                print("\r", end="")
 
     def input_password(self, password: str):
         while True:
@@ -103,7 +104,7 @@ class TinderBot:
                     print("Password is correct.")
                 break
             except NoSuchElementException:
-                print("\r", end = "")
+                print("\r", end="")
 
     def allow_location(self):
         while True:
@@ -143,10 +144,11 @@ class TinderBot:
                             break
                         except NoSuchElementException or ElementClickInterceptedException:
                             # If match
-                            back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/main/div["
-                                                                           "2]/div/div/div[1]/div/div[3]/a")
+                            back_to_tinder = self.driver.find_element_by_xpath(
+                                "/html/body/div[1]/div/div[1]/div/main/div["
+                                "2]/div/div/div[1]/div/div[3]/a")
                             back_to_tinder.click()
-                    except NoSuchElementException or  ElementClickInterceptedException:
+                    except NoSuchElementException or ElementClickInterceptedException:
                         # Avoiding Tinder Premium notification
                         back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[2]/div/div/button[2]")
                         back_to_tinder.click()
@@ -164,12 +166,12 @@ class TinderBot:
             loading("partners")
 
     def auto_swipe(self):
-            time.sleep(0.5)
-            self.like()
+        time.sleep(0.5)
+        self.like()
 
 
 def loading(obj_name: str):
     animation = ["|", "/", "-", "\\"]
     for i in animation:
-        print('\rPlease wait for the ' + obj_name, i, end = "")
+        print('\rPlease wait for the ' + obj_name, i, end="")
         time.sleep(0.5)
