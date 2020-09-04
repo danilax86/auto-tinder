@@ -127,19 +127,32 @@ class TinderBot:
                 loading("page loading")
 
     def like(self):
-        try:
-            like_btn = self.driver.find_element_by_xpath(
-                "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button")
-            like_btn.click()
-        except ElementClickInterceptedException:
-            # If match
+        while True:
             try:
-                back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/main/div["
-                                                                   "2]/div/div/div[1]/div/div[3]/a")
-                back_to_tinder.click()
-            except NoSuchElementException or ElementClickInterceptedException:
-                time.sleep(1)
-                loading("partners")
+                # Pushing a like button
+                like_btn = self.driver.find_element_by_xpath(
+                    "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button")
+                like_btn.click()
+            except ElementClickInterceptedException:
+                try:
+                    try:
+                        try:
+                            # If not enough likes
+                            self.driver.find_element_by_xpath("/html/body/div[2]/div/div/div[1]/div[1]")
+                            print("\nYou are Out of Likes!")
+                            break
+                        except NoSuchElementException or ElementClickInterceptedException:
+                            # If match
+                            back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/main/div["
+                                                                           "2]/div/div/div[1]/div/div[3]/a")
+                            back_to_tinder.click()
+                    except NoSuchElementException or  ElementClickInterceptedException:
+                        # Avoiding Tinder Premium notification
+                        back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[2]/div/div/button[2]")
+                        back_to_tinder.click()
+                except NoSuchElementException or ElementClickInterceptedException:
+                    time.sleep(1)
+                    loading("partners")
 
     def dislike(self):
         try:
@@ -151,7 +164,6 @@ class TinderBot:
             loading("partners")
 
     def auto_swipe(self):
-        while True:
             time.sleep(0.5)
             self.like()
 
