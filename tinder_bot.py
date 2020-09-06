@@ -1,6 +1,8 @@
 import os
 import time
 
+from selenium.webdriver.remote.webelement import WebElement
+
 from web_driver import WebDriver
 from selenium import webdriver
 from selenium.common.exceptions import *
@@ -94,7 +96,8 @@ class TinderBot:
                 # Password correctness checker
                 try:
                     self.driver.find_element_by_xpath(
-                        "/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div[2]")
+                        "/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div["
+                        "1]/div/form/span/section/div/div/div[1]/div[2]")
                     password_in.clear()
                     print("Password is incorrect.")
                     password = str(input("Please, provide correct password: "))
