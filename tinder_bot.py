@@ -130,34 +130,44 @@ class TinderBot:
             except NoSuchElementException or StaleElementReferenceException:
                 loading("page loading")
 
+    def avoid_premium(self):
+        back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[2]/div/div/button[2]")
+        back_to_tinder.click()
+
+    def check_enough_likes(self):
+        self.driver.find_element_by_xpath("/html/body/div[2]/div/div/div[1]/div[1]")
+        print("\nYou are Out of Likes!")
+
+    def push_like_btn(self):
+        like_btn = self.driver.find_element_by_xpath(
+            "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button")
+        like_btn.click()
+
+    def check_match(self):
+        # If match
+        back_to_tinder = self.driver.find_element_by_xpath(
+            "/html/body/div[1]/div/div[1]/div/main/div["
+            "2]/div/div/div[1]/div/div[3]/a")
+        back_to_tinder.click()
+
     def like(self):
         while True:
             try:
                 # Pushing a like button
-                like_btn = self.driver.find_element_by_xpath(
-                    "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button")
-                like_btn.click()
+                self.push_like_btn()
             except ElementClickInterceptedException:
                 try:
                     try:
                         # Avoiding Tinder Premium notification
-                        back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[2]/div/div/button[2]")
-                        back_to_tinder.click()
+                        self.avoid_premium()
                         try:
                             # If not enough likes
-                            self.driver.find_element_by_xpath("/html/body/div[2]/div/div/div[1]/div[1]")
-                            print("\nYou are Out of Likes!")
+                            self.check_enough_likes()
                             break
                         except NoSuchElementException or ElementClickInterceptedException:
-                            # If match
-                            back_to_tinder = self.driver.find_element_by_xpath(
-                                "/html/body/div[1]/div/div[1]/div/main/div["
-                                "2]/div/div/div[1]/div/div[3]/a")
-                            back_to_tinder.click()
+                            self.check_match()
                     except NoSuchElementException or ElementClickInterceptedException:
-                        # If not enough likes
-                        self.driver.find_element_by_xpath("/html/body/div[2]/div/div/div[1]/div[1]")
-                        print("\nYou are Out of Likes!")
+                        self.check_enough_likes()
                         break
                 except NoSuchElementException or ElementClickInterceptedException:
                     time.sleep(1)
