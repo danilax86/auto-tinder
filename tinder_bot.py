@@ -135,7 +135,7 @@ class TinderBot:
         back_to_tinder.click()
 
     def check_enough_likes(self):
-        self.driver.find_element_by_xpath("/html/body/div[2]/div/div/div[1]/div[1]")
+        self.driver.find_element_by_xpath("/html/body/div[2]/div/div/div[3]/div/button")
         print("\nYou are Out of Likes!")
 
     def push_like_btn(self):
@@ -150,28 +150,37 @@ class TinderBot:
             "2]/div/div/div[1]/div/div[3]/a")
         back_to_tinder.click()
 
+    def avoid_received_likes(self):
+        back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[2]/div/div/div/div[3]/button[2]")
+        back_to_tinder.click()
+
     def like(self):
         while True:
             try:
-                # Pushing a like button
-                self.push_like_btn()
-            except ElementClickInterceptedException:
+                self.avoid_received_likes()
+            except NoSuchElementException:
                 try:
+                    # If not enough likes
+                    self.check_enough_likes()
+                    break
+                except NoSuchElementException:
                     try:
-                        # Avoiding Tinder Premium notification
+                        # If premium ad pops up
                         self.avoid_premium()
+                    except NoSuchElementException:
                         try:
-                            # If not enough likes
-                            self.check_enough_likes()
-                            break
-                        except NoSuchElementException or ElementClickInterceptedException:
+                            # If match
                             self.check_match()
-                    except NoSuchElementException or ElementClickInterceptedException:
-                        self.check_enough_likes()
-                        break
-                except NoSuchElementException or ElementClickInterceptedException:
-                    time.sleep(1)
-                    loading("partners")
+                            print("You've got a match")
+                        except NoSuchElementException:
+                            try:
+                                self.push_like_btn()
+                            except NoSuchElementException or ElementClickInterceptedException:
+                                time.sleep(1)
+                                loading("partners")
+            except ElementClickInterceptedException:
+                time.sleep(1)
+                loading("partners")
 
     def dislike(self):
         try:
