@@ -176,8 +176,11 @@ class TinderBot:
                             try:
                                 self.push_like_btn()
                             except NoSuchElementException or ElementClickInterceptedException:
-                                time.sleep(1)
-                                loading("partners")
+                                try:
+                                    self.check_match()
+                                except ElementClickInterceptedException or NoSuchElementException:
+                                    time.sleep(1)
+                                    loading("partners")
             except ElementClickInterceptedException:
                 time.sleep(1)
                 loading("partners")
