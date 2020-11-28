@@ -158,7 +158,6 @@ class TinderBot:
     def out_of_partners(self):
         go_global_btn = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div["
                                                           "1]/div[1]/div[1]/div[2]/button")
-        time.sleep(10)
         go_global_btn.click()
         time.sleep(2)
 
@@ -174,6 +173,7 @@ class TinderBot:
                 self.push_no_thanks_btn()
             except NoSuchElementException or ElementClickInterceptedException:
                 try:
+                    time.sleep(10)
                     self.out_of_partners()
                 except NoSuchElementException or ElementClickInterceptedException:
                     try:
