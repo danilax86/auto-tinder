@@ -173,7 +173,6 @@ class TinderBot:
                 self.push_no_thanks_btn()
             except NoSuchElementException or ElementClickInterceptedException:
                 try:
-                    time.sleep(10)
                     self.out_of_partners()
                 except NoSuchElementException or ElementClickInterceptedException:
                     try:
