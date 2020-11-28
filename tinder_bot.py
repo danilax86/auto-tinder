@@ -1,7 +1,7 @@
 import os
 import time
 
-from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.keys import Keys
 
 from web_driver import WebDriver
 from selenium import webdriver
@@ -25,7 +25,6 @@ class TinderBot:
     def google_login(self, login: str, password: str):
         self.log()
         self.push_login_btn()
-        self.push_login_btn()
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.input_email(login)
         self.input_password(password)
@@ -38,8 +37,9 @@ class TinderBot:
         while True:
             try:
                 login_btn = self.driver.find_element_by_xpath(
-                    "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/header/div[1]/div[2]/div/button")
+                    "/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div/div/header/div/div[2]/div[2]/button")
                 login_btn.click()
+
                 break
             except NoSuchElementException:
                 time.sleep(1.5)
@@ -48,8 +48,9 @@ class TinderBot:
         while True:
             try:
                 google_btn = self.driver.find_element_by_xpath(
-                    "/html/body/div[2]/div/div/div/div/div[3]/span/div/div/button")
+                    "/html/body/div[2]/div/div/div[1]/div/div[3]/span/div[1]/div/button")
                 google_btn.click()
+                google_btn.send_keys(Keys.RETURN)
                 break
             except NoSuchElementException:
                 time.sleep(1.5)
@@ -154,36 +155,46 @@ class TinderBot:
         back_to_tinder = self.driver.find_element_by_xpath("/html/body/div[2]/div/div/div/div[3]/button[2]")
         back_to_tinder.click()
 
+    def out_of_partners(self):
+        go_global_btn = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/main/div[1]/div/div/div["
+                                                          "1]/div[1]/div[1]/div[2]/button")
+        time.sleep(10)
+        go_global_btn.click()
+        time.sleep(2)
+
+    def push_no_thanks_btn(self):
+        no_thanks_btn = self.driver.find_element_by_xpath("/html/body/div[2]/div/div/button[2]")
+
+        no_thanks_btn.click()
+        time.sleep(2)
+
     def like(self):
         while True:
             try:
-                self.avoid_received_likes()
-            except NoSuchElementException:
+                self.push_no_thanks_btn()
+            except NoSuchElementException or ElementClickInterceptedException:
                 try:
-                    # If not enough likes
-                    self.check_enough_likes()
-                    break
-                except NoSuchElementException:
+                    self.out_of_partners()
+                except NoSuchElementException or ElementClickInterceptedException:
                     try:
-                        # If premium ad pops up
-                        self.avoid_premium()
-                    except NoSuchElementException:
+                        self.avoid_received_likes()
+                    except NoSuchElementException or ElementClickInterceptedException:
                         try:
-                            # If match
-                            self.check_match()
-                            print("You've got a match")
-                        except NoSuchElementException:
+                            self.avoid_premium()
+                        except NoSuchElementException or ElementClickInterceptedException:
                             try:
-                                self.push_like_btn()
+                                self.check_match()
                             except NoSuchElementException or ElementClickInterceptedException:
                                 try:
-                                    self.check_match()
-                                except ElementClickInterceptedException or NoSuchElementException:
-                                    time.sleep(1)
-                                    loading("partners")
-            except ElementClickInterceptedException:
-                time.sleep(1)
-                loading("partners")
+                                    self.push_like_btn()
+                                except NoSuchElementException or ElementClickInterceptedException:
+                                    try:
+                                        self.check_match()
+                                    except ElementClickInterceptedException or NoSuchElementException:
+                                        self.like()
+                except ElementClickInterceptedException:
+                    time.sleep(1)
+                    loading("partners")
 
     def dislike(self):
         try:
